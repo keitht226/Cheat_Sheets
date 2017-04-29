@@ -3,14 +3,14 @@
 </center>
 
 ## Contents
-[Headers](#Headers)  
-[Emphasis](#Emphasis)  
-[Tables](#Tables)  
-[Lists](#Lists)  
-[Links](#Links)  
-[Code](#Code)  
-[Block Quotes](#Block-quotes)  
-[HTML Tags](#HTML-Tags)  
+**[Headers](#headers)**  
+**[Emphasis](#emphasis)**  
+**[Tables](#tables)**  
+**[Lists](#lists)**  
+**[Links](#links)**  
+**[Code](#code)**  
+**[Block Quotes](#block-quotes)**  
+**[HTML Tags](#html-tags)**   
 ## Headers
 
 ```
