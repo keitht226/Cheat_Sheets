@@ -76,11 +76,11 @@
 # Links
 ```
 [Link](https://www.google.com "optional title for link")
-[Markdown Header](#Markdown Header)
+**[Markdown Header](#Markdown Header)**
 ![Image](path.png "optional title")
 ```
 [Link](https://www.google.com "optional title for link")  
-[Markdown Header](#Markdown Header)
+**[Markdown Header](#Markdown Header)**
 
 # Code
 ```
