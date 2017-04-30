@@ -19,13 +19,13 @@
 ### H3
 ```
 
-# Emphasis
+## Emphasis
 | Markdown | Interpreted |
 | --- | --- |
 |`*italic* or _italic_` | *italic* |
 |`**bold** or __bold__` | **bold** |
 
-# Tables
+## Tables
 ```
 | Left_Aligned | Centered | Right_Aligned |
 | :--- | :---: | ---: |
@@ -36,7 +36,7 @@
 | :--- | :---: | ---: |
 | *blah* | **blah** | blah|
 
-# Lists
+## Lists
 ```
 1. First ordered list item
 2. Another item
@@ -73,7 +73,7 @@
     - Or minuses
         + Or pluses
 
-# Links
+## Links
 ```
 [Link](https://www.google.com "optional title for link")
 **[Markdown Header](#Markdown Header)**
@@ -82,7 +82,7 @@
 [Link](https://www.google.com "optional title for link")  
 **[Markdown Header](#Markdown Header)**
 
-# Code
+## Code
 ```
 ```c
 #include <stdio.h>
@@ -100,7 +100,7 @@ int main(){
 }
 ```
 
-# Block Quotes
+## Block Quotes
 ```
 > Block **quotes** are made
 > like this
@@ -108,8 +108,9 @@ int main(){
 > Block **quotes** are made
 >like this
 
-# HTML Tags
+## HTML Tags
 ```
 <center>Text</center>
+<br> newline (like \n)
 ```
 <center>Text</center>
