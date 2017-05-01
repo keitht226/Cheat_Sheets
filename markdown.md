@@ -1,5 +1,5 @@
 <center>
-#Markdown Cheet Sheet
+# Markdown Cheet Sheet
 </center>
 
 ## Contents
