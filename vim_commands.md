@@ -1,5 +1,5 @@
 <center>
-#Vim Cheat Sheet
+# Vim Cheat Sheet
 </center>
 
 __I recommend using _ctrl [_ instead of ESC to go into normal mode__
