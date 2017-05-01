@@ -1,6 +1,4 @@
-<center>
 # Markdown Cheet Sheet
-</center>
 
 ## Contents
 **[Headers](#headers)**  
