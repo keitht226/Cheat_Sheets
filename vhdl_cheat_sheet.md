@@ -1,0 +1,149 @@
+# VHDL Cheat Sheet
+
+## Contents
+**[Concurrent Statements](#concurrent-statements)**  
+**[Sequential Statements](#sequential-statements)**  
+**[Common Logic Units](#common-logic-units)**
+
+## Concurrent Statements
+```vhdl
+-- Signal Assignment
+A <= B AND C;
+DAT <= (D AND E) OR (F AND G);
+```
+
+## Sequential Statements
+
+## Reserved Words
+|   |
+| --- | --- | --- | --- | --- |
+| abs | access | after | alias | all |
+| and | architecture | array | assert | attribute |
+| begin | block | body | buffer | bus |
+| case | component | configuration | constant | disconnect |
+| downto | else | elsif | end | entity |
+| exit | file | for | function | generate |
+| generic | guarded | if | impure | in |
+| intertial | inout | is | label | library |
+| linkage | literal | loop | map | mod |
+| nand | new | next | nor | not |
+| null | of | on | open | or |
+| others | out | package | port | postponed |
+| procedure | process | pure | range | record |
+| register | reject | rem | report | return |
+| rol | ror | select | severity | shared |
+| signal | sla | sll | sra | srl |
+| subtype | then | to | transport | type |
+| unaffected | units | until | use | variable |
+| wait | when | while | with | xnor/xor |
+
+## Naming rules
+* Base is determined with #. `2#101101# or `16#2D#`
+* Underscores have no effect on numbers: `1000_1010 is the same as 10001010`
+* Characters have '', strings have ""
+    * **strings cannot use underscores like numbers** `"1000_1010 is different with "10001010"`
+* Identifier can only contain alphabetic letters, decimal digits, and underscores
+* The first character must be a letter
+* The last character cannot be an underscore
+* Two successive underscores are not allow
+* VHDL is not case-sensitive
+
+## Objects
+### Signals
+* Represents a wire, or a wire with memory (i.e. a register or latch)
+```vhdl
+signal signal_name, signal_name, ... : data_type;
+signal a, b, c : std_logic := '0';
+### Constant
+```vhdl
+constant CONSTANT_NAME : data_type := value_expression;
+```
+### Variables
+```vhdl
+variable variable_name, variable_name, ... : data_type
+--optional initial value can be given
+variable_name := value_expression; -- := means immediate assignment
+```
+* Can only be declared and used in a process and is local to that process.
+* Has no direct mapping with hardware
+* Has no associated timing information.  
+### Alias
+* Alias is not supported by all synthesis tools
+```vhdl
+signal word: std_logic_vector(15 downto 0);
+alias op: std_logic_vector(6 downto 0) is word(15 downto 9);
+alias reg1: std_logic_vector(2 downto 0) is word(8 downto 6);
+```
+
+## Data Types
+* integer: range not defined, but minimal range is -(2<sup>31</sup>-1) to 2<sup>31</sup>-1 which is 32 bits. 
+    * natural and positive subtypes. Natural starts at 0, positive at 1.
+* boolean: false, true
+* bit: '0' or '1'
+* bit_vector: one-dimensional array with elements of the bit data type
+* std_logic: **only '0' '1' and 'Z' are used in synthesis**
+    * 'U': uninitialized
+    * 'X' 'W': unkown and weak unkown 
+    * '0' '1': forcing logic 0, forcing logic 1 (driven by a circuit with a regular driving current)
+    * 'Z': high impedance (usually encountered in a tri-state buffer)
+    * 'L' 'H': weak logic 0, weak logic 1 (signal is obtained from wired-logic types of circuits in which the driving current is weak
+    * '-': stands for don't care
+* std_logic_vector: array of elements with the std_logic data type (acts as a group of signals or a bus)
+    * `signal a: std_logic_vector(7 downto 0); --7 is the most significant bit`
+    
+## Array Aggregate
+```vhdl
+a <= "10100000";
+a <= ('1','0','1','0','0','0','0','0');
+a <= (7=>'1',6=>'0',0=>'0',1=>'0',5=>'1',
+      4=>'0',3=>'0',2=>'0');
+a <= (7|5 => '1', 6|4|3|2|1|0=>'0');
+a <= (7|5=>'1', others=>'0');
+
+## Operators
+### Operators
+| Operator | Description | Data Type of Operand a | Data Type of Operand B | Data Type Result |
+| a ** b | exponentiation | integer | integer | integer |
+| abs a | absolute value | integer | N/A | integer |
+| not a | negation | boolean, bit, bit_vector, std_logic_vector, std_logic | N/A | same as a |
+| a * b | multiplication | integer | integer | integer |
+| a / b | division | integer | integer | integer |
+| a mod b | modulo | integer | integer | integer |
+| a rem b | remainder | integer | integer | integer |
+| + a | identity | integer | N/A | integer |
+| - a | negation | integer | N/A | integer |
+| a + b | addition | integer | integer | integer |
+| a - b | subtraction | integer | integer | integer |
+| a & b | concatentation | 1-d array, element | 1-D array, element | 1-D array |
+| a sll b | shift-left logical | bit_vector | integer | bit_vector |
+| a srl b | shift-right logical | bit_vector | integer | bit_vector |
+| a sla b | shift-left arithmetic | bit_vector | integer | bit_vector |
+| a sra b | shift-right arithemetic | bit_vector | integer | bit_vector |
+| a rol b | rotate left | bit_vector | integer | bit_vector |
+| a ror b | rotateright | bit_vector | integer | bit_vector |
+| a = b | equal to | any | any | boolean | **Note:** arrays of different lengths always evaluate to false
+| a /= b | not equal to | any | any | boolean |
+| a < b | less than | scalar or 1-D array | scalar or 1-D array | boolean |
+| a <= b | less than or equal | scalar or 1-D array | scalar or 1-D array | boolean |
+| a > b | greater than | scalar or 1-D array | scalar or 1-D array | boolean |
+| a >= b | greater than or equal | scalar or 1-D array | scalar or 1-D array | boolean |
+| a and b | and | boolean, bit, bit_vector, std_logic_vector, std_logic | same as a | same as a |
+| a or b | or | boolean, bit, bit_vector, std_logic_vector, std_logic | same as a | same as a |
+| a xor b | xor | boolean, bit, bit_vector, std_logic_vector, std_logic | same as a | same as a |
+| a nand b | nand | boolean, bit, bit_vector, std_logic_vector, std_logic | same as ar | same as a |
+| a nor b | nor | boolean, bit, bit_vector, std_logic_vector, std_logic | same as a | same as a |
+| a xnor b | xnor | boolean, bit, bit_vector, std_logic_vector, std_logic | same as a | same as a |
+
+### Precedence
+| Precedence | Operators |
+| --- | --- |
+| Highest | ** abs not<br>* / mod rem<br>+ - (identity and negation)<br>& + - (arithmetic)<br>sll srl sla sra rol ror<br>= /= < <= > >=|
+| Lowest | and or nand nor xor xnor |
+
+## Type Conversion
+| Function | Data type of operand a | Data type of result |
+| --- | --- | --- |
+| to_bit(a) | std_logic | bit |
+| to_stdulogic(a) | bit | std_logic |
+| to_bitvector(a) | std_logic_vector | bit_vector |
+| to_stdlogicvector(a) | bit_vector | std_logic_vector |
