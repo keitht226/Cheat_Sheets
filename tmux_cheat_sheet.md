@@ -6,11 +6,11 @@ Prefix key is set in .tmux.config
 **Anything in _italics_ is unique to my .tmux.config and not default behavior**
 
 ## Contents
-**[Basics](Basics)**  
-**[Sessions (workspaces)](Sessions (workspaces))**  
-**[Window Shortcuts (tabs)](Window Shortcuts (tabs))**  
-**[Pane Shortcuts (splits)](Pane Shortcuts (splits))**  
-**[Misc](Misc)**  
+**[Basics](#basics)**  
+**[Sessions (workspaces)](#sessions)**  
+**[Window Shortcuts (tabs)](#window-shortcuts)**  
+**[Pane Shortcuts (splits)](#pane-shortcuts)**  
+**[Misc](#misc)**  
 
 ## Basics
 | Command | Effect |
@@ -20,7 +20,7 @@ Prefix key is set in .tmux.config
 | tmux ls | list sessions |
 | tmux kill-session -t session_name | kill session |
 
-## Sessions (workspaces)
+## Sessions
 | Key Sequence <br>(starting with prefix) | Effect |
 | --- | --- |
 | :new<\CR> | new sessions |
@@ -29,7 +29,7 @@ Prefix key is set in .tmux.config
 | ( | previous session |
 | ) | next session |
 
-## Window Shortcuts (tabs)
+## Window Shortcuts
 | Key Sequence <br>(starting with prefix) | Effect |
 | --- | --- |
 | c | create window |
@@ -40,7 +40,7 @@ Prefix key is set in .tmux.config
 | , | rename window |
 | & or type 'exit' | kill window |
 
-## Pane Shortcuts (splits)
+## Pane Shortcuts
 | Key Sequence <br>(starting with prefix) | Effect |
 | --- | --- |
 | % *or V* | vertical split |

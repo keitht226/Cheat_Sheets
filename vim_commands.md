@@ -95,3 +95,4 @@ __I recommend using _ctrl [_ instead of ESC to go into normal mode__
 * To open a file from the command line in an existing instance of gvim, use the option --remote-tab-silent. This doesn't play well with multiple instances of gvim however. 
 * To open multiple files in individual tabs from the command line: gvim -p file1 file2 file3 ...
 * Doubling a command often affects the whole line. dd will delete a whole line. yy will copy a whole line. etc. 
+* In command mode, % is shorthand for the path to the current file

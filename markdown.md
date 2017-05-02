@@ -73,24 +73,29 @@
 
 ## Links
 ```
+Website:
 [Link](https://www.google.com "optional title for link")
-**[Markdown Header](#Markdown Header)**
+
+Table of Contents:
+**[Markdown Header](#markdown-header)**  
+                     ^       ^^ lower-case and hyphen are necessary!
+
+Images:
 ![Image](path.png "optional title")
 ```
-[Link](https://www.google.com "optional title for link")  
-**[Markdown Header](#Markdown Header)**
 
 ## Code
+````
+```C
+ #include <stdio.h>
+ int main(){
+   printf("Hello World\n");
+   return 0;
+ }
 ```
-```c
-#include <stdio.h>
-int main(){
-  printf("Hello World\n");
-  return 0;
-}
-  ```
-```
-```c
+````
+
+```C
 #include <stdio.h>
 int main(){
   printf("Hello World\n");
@@ -104,7 +109,7 @@ int main(){
 > like this
 ```
 > Block **quotes** are made
->like this
+> like this
 
 ## HTML Tags
 ```

@@ -1,8 +1,16 @@
 # Bash Cheat Sheet
 
 ## Contents
-**[Internal Variables](#Internal-Variables)**  
-**[Conditionals](#Conditionals)**  
+**[Basics](#basics)**  
+**[Internal Variables](#internal-variables)**  
+**[Conditionals](#conditionals)**   
+**[Loops](#loops)**  
+**[Parsing](#parsing)**  
+**[Redirection](#redirection)**  
+**[Functions](#functions)**  
+**[Reading Input](#reading-input)**  
+**[Command Substitution](#command-substitution)**  
+**[MISC](#misc)**  
 
 ## Basics
 * $ expands variables
@@ -36,7 +44,7 @@
 | @ | Same as $* but each parameter is a quoted string, that is, the parameters are passed on intact, without interpretation or expansion. |
 | - | Flags passed to script (using set) | 
 
-## Conditiionals
+## Conditionals
 ### Syntax
 ```bash
 if [ a -operator b ] && [ a -operator b ] # [[ condition && condition ]] works too, but not with single []
@@ -171,7 +179,7 @@ function_name(){}
 function_name $arg1 $arg2 ...
 ```
 
-## Reading Input (with parsing example)
+## Reading Input
 * Command `read` is used.
 ### Read Options
 | Option | Usage |
@@ -185,12 +193,9 @@ function_name $arg1 $arg2 ...
 | -s | silent mode. If input is coming from a terminal, characters are not echoed |
 | -t TIMEOUT | cause read to time out and return failure if a complete line of input is not read within TIMEOUT seconds. This option has no effect if read is not reading input from the terminal or from a pipe. |
 | -u FD | read input from file descriptor FD | 
-* ```while IFS=`` read -r line || [[ -n "$line" ]]``` 
-    * ```IFS=`` ``` prevents leading/trailing whitespace from being trimmed
-    * -r prevents backslash escapes from being interpreted
-    * `|| [[ -n "$line" ]]` prevents the last line from being ignored if it doesn't end with a \n (read returns a non-zero exit code as soon as it encounters EOF)
 
-### Example
+
+### Example 1
 ```bash
 #!/bin/bash
  
@@ -253,7 +258,7 @@ file_path=$(find ~/ -name $file)
 or
 
 file_path=`find ~/ -name $file` # old method
-
+```
 ## Misc
 * Shorthand test for failure
 ```bash
@@ -263,7 +268,6 @@ rm hello.txt || echo "Couldn't delete hello.txt." >&2
 * Useful functions
 ```bash
 in_array() { for e in "${@:2}"; do [[ "$e" = "$1" ]] && break; done;}
-````
-* Good to use when globbing. Prevents error in case the glob does not match any name
+```
+* Good to use when globbing. Prevents error in case the glob does not match any name  
 `shopt -s nullglob`
-* 
