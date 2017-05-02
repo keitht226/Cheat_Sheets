@@ -6,16 +6,16 @@
 **[Common Logic Units](#common-logic-units)**
 
 ## Concurrent Statements
+### Signal Assignment
 ```vhdl
--- Signal Assignment
-A <= B AND C;
-DAT <= (D AND E) OR (F AND G);
+signal_name <= value_expression
 ```
+* closed feedback loops are possible (`q <= ((not q) and (not en)) or (d and en)`) but should be avoided completely. Signal assignment statements that contani a closed eedback loop become sensitive to internal propagation delay and may exhibit race or oscillation. 
 
 ## Sequential Statements
 
 ## Reserved Words
-|   |
+|   | | | | |
 | --- | --- | --- | --- | --- |
 | abs | access | after | alias | all |
 | and | architecture | array | assert | attribute |
@@ -41,7 +41,7 @@ DAT <= (D AND E) OR (F AND G);
 * Base is determined with #. `2#101101# or `16#2D#`
 * Underscores have no effect on numbers: `1000_1010 is the same as 10001010`
 * Characters have '', strings have ""
-    * **strings cannot use underscores like numbers** `"1000_1010 is different with "10001010"`
+      * **strings cannot use underscores like numbers** `"1000_1010 is different with "10001010"`
 * Identifier can only contain alphabetic letters, decimal digits, and underscores
 * The first character must be a letter
 * The last character cannot be an underscore
@@ -54,6 +54,7 @@ DAT <= (D AND E) OR (F AND G);
 ```vhdl
 signal signal_name, signal_name, ... : data_type;
 signal a, b, c : std_logic := '0';
+```
 ### Constant
 ```vhdl
 constant CONSTANT_NAME : data_type := value_expression;
@@ -90,6 +91,38 @@ alias reg1: std_logic_vector(2 downto 0) is word(8 downto 6);
     * '-': stands for don't care
 * std_logic_vector: array of elements with the std_logic data type (acts as a group of signals or a bus)
     * `signal a: std_logic_vector(7 downto 0); --7 is the most significant bit`
+### signed and unsigned
+* requires `use ieee.numeric_std.all;`
+* array of elements with std_logic data type
+* support arithmetic operations, unlike std_logic_vector
+| Overloaded operator | Data type of operand a | Data type of operand b | Data Type of result |
+| --- | --- | --- | --- | 
+| abs a | signed | N/A | signed |
+| - a | | | |
+| a \* b | | | |
+| a / b | unsigned | unsigned, nautral | unsigned |
+| a mod b | unsigned, natural | unsigned | unsigned |
+| a rem b | signed | signed, integer | signed |
+| a + b | signed, integer | signed | signed |
+| a -b | | | | | 
+| a = b | | | | |
+| a /= b | unsigned | unsigned, natural | boolean |
+| a < b | unsigned, natural | unsigned | boolean |
+| a <= b | signed | signed, integer | boolean |
+| a > b | signed, integer | signed | boolean |
+| a >= b | | | | |
+
+| Function | Description | Data type of operand a | Data type of operand b | Data type of result |
+| --- | --- | --- | --- | --- |
+| shift_left(a,b) | shift left | unsigned, signed | natural | same as a |
+| shift_right(a,b) | shift right | same | same | same |
+| rotate_left(a,b) | rotate left | same | same | same |
+| rotate_right(a,b) | rotate right | same | same | same |
+| resize(a,b) | resize array | same | same | same |
+| std_match(a,b) | compare '-' | unsigned, signed, std_logic_vector, std_logic | same as a | boolean |
+| to_integer(a) | data type covnersion | unsigned, signed | N/A | integer |
+| to_unsigned(a,b) | same | natural | natural | unsigned |
+| to signed(a,b) | same | integer | natural | signed |
     
 ## Array Aggregate
 ```vhdl
@@ -99,14 +132,16 @@ a <= (7=>'1',6=>'0',0=>'0',1=>'0',5=>'1',
       4=>'0',3=>'0',2=>'0');
 a <= (7|5 => '1', 6|4|3|2|1|0=>'0');
 a <= (7|5=>'1', others=>'0');
+```
 
 ## Operators
 ### Operators
 | Operator | Description | Data Type of Operand a | Data Type of Operand B | Data Type Result |
-| a ** b | exponentiation | integer | integer | integer |
+| --- | --- | --- | --- | --- |
+| a \*\* b | exponentiation | integer | integer | integer |
 | abs a | absolute value | integer | N/A | integer |
 | not a | negation | boolean, bit, bit_vector, std_logic_vector, std_logic | N/A | same as a |
-| a * b | multiplication | integer | integer | integer |
+| a \* b | multiplication | integer | integer | integer |
 | a / b | division | integer | integer | integer |
 | a mod b | modulo | integer | integer | integer |
 | a rem b | remainder | integer | integer | integer |
@@ -137,7 +172,7 @@ a <= (7|5=>'1', others=>'0');
 ### Precedence
 | Precedence | Operators |
 | --- | --- |
-| Highest | ** abs not<br>* / mod rem<br>+ - (identity and negation)<br>& + - (arithmetic)<br>sll srl sla sra rol ror<br>= /= < <= > >=|
+| Highest | \*\* abs not<br>\* / mod rem<br>+ - (identity and negation)<br>& + - (arithmetic)<br>sll srl sla sra rol ror<br>= /= < <= > >=|
 | Lowest | and or nand nor xor xnor |
 
 ## Type Conversion
@@ -147,3 +182,15 @@ a <= (7|5=>'1', others=>'0');
 | to_stdulogic(a) | bit | std_logic |
 | to_bitvector(a) | std_logic_vector | bit_vector |
 | to_stdlogicvector(a) | bit_vector | std_logic_vector |
+| std_logic_vector(a) | unsigned, signed | std_logic_vector |
+| unsigned(a) | signed, std_logic_vector | unsigned |
+| signed(a) | unsigned, std_logic_vector | signed | 
+| to_integer(a) | unsigned, signed | integer |
+| to_unsigned(a, size) | natural | unsigned |
+| to_signed(a, size) | integer | signed |
+
+## Synthesis Guidelines
+* Use the std_logic_vector and std_logic data types instead of the bit_vector or bit data types
+* Use the numeric_std package and the unsigned and signed data types for synthesizing arithmetic operations
+* Use only the descending range (i.e. downto) in the array specification
+* Use parentheses to clarify the inteded order of evaluation
