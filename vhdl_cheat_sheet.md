@@ -3,6 +3,14 @@
 ## Contents
 **[Concurrent Statements](#concurrent-statements)**  
 **[Sequential Statements](#sequential-statements)**  
+**[Reserved Word](#reserved-words)**  
+**[Naming Rules](#naming-rules)**  
+**[Objects](#objects)**  
+**[Data Types](#data-types)**  
+**[Array Aggregate](#array-aggregate)**  
+**[Operators](#operators)**  
+**[Type Conversion](#type-conversion)**  
+**[Synthesis Guidelines](#synthesis-guidelines)**  
 **[Common Logic Units](#common-logic-units)**
 
 ## Concurrent Statements
@@ -10,9 +18,138 @@
 ```vhdl
 signal_name <= value_expression
 ```
-* closed feedback loops are possible (`q <= ((not q) and (not en)) or (d and en)`) but should be avoided completely. Signal assignment statements that contani a closed eedback loop become sensitive to internal propagation delay and may exhibit race or oscillation. 
+* closed feedback loops are possible (`q <= ((not q) and (not en)) or (d and en)`) but should be avoided completely. Signal assignment statements that contani a closed eedback loop become sensitive to internal propagation delay and may exhibit race or oscillation.  
+### Conditional Signal Assignment
+* Results in multiple cascading multiplexers
+* Better when certain inputs conditions are given preferenctial treatment (such as a priority encoder)
+```vhdl
+signal_name <= value_expr_1 when boolean_expr_1 else
+               value_expr_2 when boolean_expr_2 else
+               value_expr_n;
+```
+### Selected Signal Assignment Statement
+* Results in one large multiplexor
+* Good for things such as truth tables, decoders, and multiplexors.
+```vhdl
+with select_expression select
+     signal_name <= value_expr1 when choice_1,
+                    value_expr2 when choice_2,
+                    value_expr_n when choice_n;
+```
 
 ## Sequential Statements
+### Process With a sensitivity list
+* Sensitivity list is a list of signals to which the process responds.
+* A VHDL process is activated when a signal in the sensitivity list changes in value
+* Incomplete sensitivity lists create memory. All input signals are needed to be complete.
+```vhdl
+process(sensitivity_list)
+     declarations;
+begin
+     sequential statement;
+     sequential statement;
+end process;
+```
+### Wait Statement
+* Multiple wait statements are allowed, but in synthesis only a few well-defined forms of wait statements can be used, and normally only one wait statement is allowed per process.
+* A sensitivity list isn't needed with wait statements, but is clearer and the preferred method
+```vhdl
+process
+begin
+     y <= a and b and c;
+     wait on a, b, c;
+end process;
+-- wait on signals;
+-- wait until boolean_expression;
+-- wait for time_expression;
+```
+
+### Sequential Signal Assignment
+```vhdl
+a,b,c,d,y : std_logic;
+-- ...
+process(a,b,c,d)
+begin
+     y <= a or c:
+     y <= a and b: -- because this is sequential
+     y <= c and d; -- only this line matters
+end process;
+```
+
+### Variable assignment
+* see object section for more details
+* best to use signals when possible. Only resort to variables for characterics that cannot be described by signals. 
+```vhdl
+signal a,b,y: std_logic;
+
+process(a,b)
+     variable tmp: std_logic;
+begin
+     tmp := '0';
+     tmp := tmp or a;
+     tmp := tmp or b;
+     y <= tmp;
+end process;
+```
+
+### if statement
+* Leaving out conditions results in memory.
+* Every output must be assigned per condition or else memory is created. 
+     * assigning defualt values before the first condition prevents this and is neater.
+* Similar to conditional signal assignment
+```vhdl
+if boolean_expr1 then
+     sequential statements;
+elsif boolean_expr2 then
+     sequential statements;
+else
+     sequential statemetns;
+end if;
+```
+     
+### case statement
+* Similar to select signal assignment
+* Incomplete case statements are not allowed and will produce an error. 
+* Default output values need to be provided or else memory is created. 
+```vhdl
+case case_expression is
+    when choice_1 =>
+          sequential statements;
+    when choice_2 =>
+          sequential statements;
+    when others =>
+          sequential statements;
+end case;
+```
+
+### for loop
+```vhdl
+for index in loop-range loop
+     sequential statements;
+end loop;
+```
+#### bitwise xor example
+```vhdl
+library ieee;
+use ieee.std_logic_1164.all;
+entity bit_xor is
+     port(
+          a, b: in std_logic_vector(3 downto 0);
+          y: out std_logic_vector93 downto 0)
+     );
+end bit_xor;
+
+architecture demo_arch of bit_xor is
+     constant WIDTH: integer := 4;
+begin
+     process(a,b)
+     begin
+          for i in (WIDTH-1) downto 0 loop
+               y(i) <= a(i) xor b(i);
+          end loop;
+     end process;
+end demo_arch;
+```
 
 ## Reserved Words
 |   | | | | |
@@ -41,7 +178,7 @@ signal_name <= value_expression
 * Base is determined with #. `2#101101# or `16#2D#`
 * Underscores have no effect on numbers: `1000_1010 is the same as 10001010`
 * Characters have '', strings have ""
-      * **strings cannot use underscores like numbers** `"1000_1010 is different with "10001010"`
+     * **strings cannot use underscores like numbers** `"1000_1010 is different with "10001010"`
 * Identifier can only contain alphabetic letters, decimal digits, and underscores
 * The first character must be a letter
 * The last character cannot be an underscore
@@ -194,3 +331,46 @@ a <= (7|5=>'1', others=>'0');
 * Use the numeric_std package and the unsigned and signed data types for synthesizing arithmetic operations
 * Use only the descending range (i.e. downto) in the array specification
 * Use parentheses to clarify the inteded order of evaluation
+* Variables should be used with care. A Signal is generally preferred. 
+* Except for the default value, avoid overriding as ignal multiple times ina  process.
+* Think of the if and case statements as routing structures rather than as sequential control constructs. ('if' leads to cascading priority chains, 'case' leads to one large mux)
+
+## Common Logic Units
+### Multiplexer
+### Decoder
+### Simple ALU
+### D FF with enable
+```vhdl
+library ieee;
+use ieee.std_logic_1164.all;
+entity dff_en is
+     port(
+          clk: in std_logic;
+          reset: in std_logic;
+          en: in std_logic;
+          d: in std_logic;
+          q: out std_logic
+     );
+end dff_en;
+
+architecture two_seg_arch of dff_en is
+     signal q_reg: std_logic;
+     signal q_next: std_logic;
+begin
+     -- D FF
+     process(clk, reset)
+     begin
+          if (reset='1') then
+               q_reg <= '0';
+          elsif (clk'event and clk='1') then
+               q_reg <= q_next;
+          end if;
+     end process;
+     -- next-state logic
+     q_next <= d when en='1' else
+               q_reg;
+     -- output logic
+     q <= q_reg;
+end two_seg_arch;
+```
+```
