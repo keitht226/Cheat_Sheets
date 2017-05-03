@@ -28,7 +28,7 @@
 | git grep | search for stuff like in linux terminal |
 | git blame | shows copy of file annotated with changes and who committed |
 
-Fugitive
+## Fugitive
 | Command | Usage |
 | --- | --- |
 | :Git \<command> | run any git command |
@@ -47,4 +47,4 @@ Fugitive
 | :diffupdate | diffgets and diffputs can mess with the diff highlighting. This fixes it |
 | :only | close all splits but current buffer |
 
-Running :Gdiff on a merge conflicted file opens up 3 split windows. Left is the active branch, mid is the working copy, right is the branch mergin in. diffget and diffput get an argument in this case. The argument is the ID of the buffer you want to use. [c and ]c jump between conflicted sections. Shorthand :do doesn't work, but :dp does. 
+* Running :Gdiff on a merge conflicted file opens up 3 split windows. Left is the active branch, mid is the working copy, right is the branch mergin in. diffget and diffput get an argument in this case. The argument is the ID of the buffer you want to use. [c and ]c jump between conflicted sections. Shorthand :do doesn't work, but :dp does. 
