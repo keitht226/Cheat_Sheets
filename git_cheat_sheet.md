@@ -28,7 +28,7 @@
 | git grep | search for stuff like in linux terminal |
 | git blame | shows copy of file annotated with changes and who committed |
 
-## Fugitive
+## Fugitive (vim plugin)
 | Command | Usage |
 | --- | --- |
 | :Git \<command> | run any git command |
