@@ -4,6 +4,14 @@
 
 __I recommend using _ctrl [_ instead of ESC to go into normal mode__
 
+## Contents
+**[Movement](#movement)**  
+**[Editing](#editing)**  
+**[Find/Replace](#find-replace)**  
+**[Tabs/Windows/Buffers](#tabs-windows-buffers)**  
+**[Folding/Marks](#folding-marks)**  
+**[Other Notes](#other-notes)**  
+
 ## Movement
 | Description | Vim Command | Notes |
 | --- | --- | --- |
@@ -31,7 +39,7 @@ __I recommend using _ctrl [_ instead of ESC to go into normal mode__
 | yank (copy) | y | can be combined with many things |
 | paste | p |
 | visual mode | v |
-| visual block mode | V | _lineNu_gg is useful in combination with this|
+| visual block mode | V | _lineNu_ gg is useful in combination with this|
 | Easy Block Commenting in code | __0__ (to jump to beginning of line) __ctrl v__ move up or down __I__ language specific comment characters __ctrl [__ move cursor anywhere to take effect | of course, comments can be deleted in similar fashion |
 | delete and then enter insert mode (change) | c | useful combos: ce c$ c0 ci( ci[ ci{ ci" |
 | inside _char_ | i _char_ | used in combo with d,c,y,etc. yiw is useful for copying word under cursor regardless of position. |
@@ -45,7 +53,7 @@ __I recommend using _ctrl [_ instead of ESC to go into normal mode__
 | adjust tab indent of current line | >> or << | can shift entire blocks using visual mode. Use . to repeat. |
 | record commands for repeated use to _key_ | q _key_ _any number of commands to be recorded_ q | use @ _key_ to perform recorded commands. To perform the recorded action repeatedly, type a number before @. For example, 10@a will do all the actions I recorded to 'a' ten times. |
 
-## Find/Replace
+## Find-Replace
 | Description | Vim Command | Notes |
 | --- | --- | --- |
 | Search forward for _string_ | /_string_ |
@@ -57,7 +65,7 @@ __I recommend using _ctrl [_ instead of ESC to go into normal mode__
 | Remove highlight after search | :nohl |
 | Find all occurrences of word under cursor | * |
 
-## Tabs/Windows/Buffers
+## Tabs-Windows-Buffers
 | Description | Vim Command | Notes |
 | --- | --- | --- |
 | split window horizontally | :split |
@@ -75,7 +83,7 @@ __I recommend using _ctrl [_ instead of ESC to go into normal mode__
 | list all open buffers | :buffers |
 | switch window focus to buffer number as displayed with :buffers | b# |
 
-## Folding/Marks
+## Folding-Marks
 | Description | Vim Command | Notes |
 | --- | --- | --- |
 | Fold lines | Highlight block to be folded with V, zf |
@@ -85,7 +93,7 @@ __I recommend using _ctrl [_ instead of ESC to go into normal mode__
 | close all folds | zC |
 | set marks | m _key_ | only works with a-z, 1-0. Upper case letters are saved between sessions even without saving the file. |
 | jump to line of mark | '_mark_ |
-| jump to line and column of mark | `_mark_ |
+| jump to line and column of mark | \`_mark_ |
 | list all marks | :marks |
 | delete a mark | :delmarks _mark_ |
 | wipe buffer, including all marks | :bw |
