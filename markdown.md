@@ -8,7 +8,8 @@
 **[Links](#links)**  
 **[Code](#code)**  
 **[Block Quotes](#block-quotes)**  
-**[HTML Tags](#html-tags)**   
+**[HTML Tags](#html-tags)**  
+**[Misc](#misc)**  
 ## Headers
 
 ```
@@ -116,4 +117,6 @@ int main(){
 <center>Text</center>
 <br> newline (like \n)
 ```
-<center>Text</center>
+
+## Misc
+* \ can be used before any character to stop it from being interpreted. `\*\*not bold or italic**`
