@@ -12,7 +12,7 @@ I haven't found a way to automate the background and foreground colors
 Remaining colors are set with the .dircolors file in dotfiles repository. Shell
 file can call it.
 
-* The following website has the asci codes for 256 colors. Dirfiles and shell
+* The following website has the ansii codes for 256 colors. Dirfiles and shell
 prompt can be set according to taste with these colors.  
 [256 Colors](misc.flogisoft.com/bash/tip_colors_and_formatting)
 
