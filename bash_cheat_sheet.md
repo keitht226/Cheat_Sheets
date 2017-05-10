@@ -21,7 +21,7 @@
     * `int=5`
     * `boolean=true`
     * `float=0.0`
-
+* Arrays can be appended like this: `array+=( "$New_Element" ) # parenthesis are important!`
 
 ## Internal Variables
 | Variable (follows $) | Usage |
