@@ -30,7 +30,7 @@
 | HOME | Home directory of user |
 | HOSTNAME | Gets system host name |
 | HOSTTYPE | identifies system hardware |
-| IFS | Internal Field Separator. Default is whitespace (space, tab, and newline)* |
+| IFS | Internal Field Separator. Default is whitespace (space, tab, and newline) |
 | LINENO | Linenumber of the shell script in which this variable appears. Useful primarily for debugging. |
 | OSTYPE | Operating System |
 | PATH | Path to binaries |
@@ -40,9 +40,10 @@
 | SECONDS | number of seconds the script has been running |
 | 0,1,2,...,n | arguments passed with script. 0 is the script itself. |
 | # | The number of command-line arguments |
-| * | All of the positional parameters, seen as a single word. Must be quoted "$*" |
-| @ | Same as $* but each parameter is a quoted string, that is, the parameters are passed on intact, without interpretation or expansion. |
+| \* | All of the positional parameters, seen as a single word. Must be quoted "$\*" |
+| @ | Same as $\* but each parameter is a quoted string, that is, the parameters are passed on intact, without interpretation or expansion. |
 | - | Flags passed to script (using set) | 
+| $? | exit status of a function |
 
 ## Conditionals
 ### Syntax
