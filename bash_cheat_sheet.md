@@ -149,6 +149,8 @@ esac
 | ${parameter:start[:length]} | show bytes starting at start for all of length |
 | ${parameter[^ or ^^ or , or ,,][pattern]} | change to upper case or lower case. ^ is upper and , is lower. Double means for every instance in variable |
 
+* **WARNING** Some of these only work with bash 4.0 or later
+
 ## Redirection
 ```bash
 # FD0: standard input FD1: Standard Output FD2: Standard Error
