@@ -22,6 +22,7 @@
     * `boolean=true`
     * `float=0.0`
 * Arrays can be appended like this: `array+=( "$New_Element" ) # parenthesis are important!`
+   * Number of arguments in array: `${#array[@]}`
 
 ## Internal Variables
 | Variable (follows $) | Usage |
@@ -268,9 +269,7 @@ file_path=`find ~/ -name $file` # old method
 rm hello.txt || echo "Couldn't delete hello.txt." >&2
 # || only perform the second command if the first fails
 ```
-* Useful functions
-```bash
-in_array() { for e in "${@:2}"; do [[ "$e" = "$1" ]] && break; done;}
-```
 * Good to use when globbing. Prevents error in case the glob does not match any name  
 `shopt -s nullglob`
+* Extended globbing. Enables ! when globbing to act as except.
+`rm !(*.c) #rm all but c files`
